@@ -85,6 +85,8 @@ minio servrer http://192.168.1.11:/media/myvol1 http://192.168.1.11:/media/myvol
 minio server https://play.minio.io:9000:/mnt/disk" starts a server on 9000 on localhost that proxies play
 
 
+# Also note the possibility of master - slave replication via https://docs.minio.io/docs/minio-client-complete-guide#mirror (which needs its own systemd script for 
+# mc mirror -w &
 
 
     - name: production
