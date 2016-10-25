@@ -76,6 +76,8 @@ minio_server_{{ server_name }}_config_/etc/default/minio/{{ server_name }}:
     - contents: |
         MINIO_ACCESS_KEY="{{ server['access_key'] }}"
         MINIO_SECRET_KEY="{{ server['secret_key'] }}"
+        MINIO_CACHE_SIZE="{{ server['cache_size'] | default('8GB') }}"
+        MINIO_CACHE_EXPIRY="{{ server['cache_expiry'] | default('72h') }}"
         MINIO_OPTS="--address {{ server['listen_address'] | default(':9000') }}"
         MINIO_VOLUMES="{{ server['volumes'] | join(' ') | default('/usr/share/minio/data') }}"
 

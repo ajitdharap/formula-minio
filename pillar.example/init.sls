@@ -27,8 +27,14 @@ minio:
         - '/usr/share/minio/volumes/data'
 
       # Access and secret key for this server instance
+      # Access key string of 5 to 20 characters in length
       access_key: 'NR3rBJkmKw1'
+      # Secret key string of 8 to 40 characters in length
       secret_key: 'xTMp07fy6xiUtACubVAW754oTJYHd1gPhY'
+
+      # Has defaults, usually no need to modify or state this at all
+      cache_size: 8GB
+      cache_expiry: 72h
 
       # This is only required for minio.client to setup ~/.mc/config.json
       url: 'http://127.0.0.1:9002'
@@ -38,8 +44,8 @@ minio:
     - name: production
       listen_address: '0.0.0.0:9005'
       url: 'http://127.0.0.1:9005'
-      access_key: 'ILJX17QKYKBrIlSKZqbEd'
-      secret_key: '60hL6VIfmE0HRWB21jCsN3gM7hzziFDtyw8VjUbjCs'
+      access_key: 'ILJX17QKYKB'
+      secret_key: '60hL6VIfmE0HRWB21jCsN3gM7hzziF'
       volumes:
         - '/usr/share/minio/volumes/production/disk1'
         - '/usr/share/minio/volumes/production/disk2'
