@@ -22,7 +22,13 @@ minio:
       # You can specify one OR for to 16 volumes. Two or three wont work. Use multiple disks.
       # https://github.com/minio/minio/tree/master/docs/erasure
       # Make sure those are mounted (this formula does not take care of that, it will only create and chown the directories)
-      # TODO: https://github.com/minio/dsync <= can this just be used?
+      #
+      # NOTE: Using dsync https://github.com/minio/dsync minio server implements three modes of operation:
+      # minio server <dir>                       (regular FS backend)
+      # minio server <di1r>... <dirN>            ( N = 16 maximum) (Single node XL backend)
+      # minio server ip1:<dir1> .... ipN:<dirN>  (N = 16 maximum) (Distributed XL backend)
+      # You can mix the volumes local and remote as you like. Including remotes will create master master read/write lock replication.
+      # If a ":" is detected, saltstack will not create a directory for the list item.
       volumes:
         - '/usr/share/minio/volumes/data'
 

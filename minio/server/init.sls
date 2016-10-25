@@ -51,6 +51,7 @@ minio_server_binary:
     ## Configuration directories and files
 
     {% for volume in server['volumes'] %}
+        {% if ':' not in volume %}
 minio_server_{{ server_name }}_volume-directory_{{ volume }}:
   file.directory:
     - name: {{ volume }}
@@ -58,6 +59,7 @@ minio_server_{{ server_name }}_volume-directory_{{ volume }}:
     - group: minio
     - mode: 770
     - makedirs: True
+        {% endif %}
     {% endfor %}
 
 minio_server_{{ server_name }}_directory_/etc/minio/{{ server_name }}:
