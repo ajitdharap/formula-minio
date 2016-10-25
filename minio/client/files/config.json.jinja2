@@ -1,0 +1,17 @@
+{
+        "version": "8",
+        "hosts": {
+{%- for server in servers %}
+                "{{ server['name'] }}": {
+                        "url": "{{ server['url'] }}",
+                        "accessKey": "{{ server['access_key'] }}",
+                        "secretKey": "{{ server['secret_key'] }}",
+                        "api": "S3v4"
+{%- if loop.last %}
+                }
+{%- else %}
+                },
+{%- endif %}
+{%- endfor %}
+        }
+}
