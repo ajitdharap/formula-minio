@@ -1,5 +1,7 @@
 # dsync:
 
+added lots of notes in pillar.example/init.sls
+
 https://github.com/minio/dsync
 
 start a minio server like:
