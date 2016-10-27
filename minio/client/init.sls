@@ -16,9 +16,10 @@ minio_client_config:
   file.managed:
     - name: /root/.mc/config.json
     - source: salt://minio/client/files/config.json.jinja2
+    - template: jinja
     - context:
         servers: {{ minio['servers'] }}
-    - template: jinja
+        additional_credentials: {{ minio['mirror']['additional_credentials'] | default({})  }}
     - user: root
     - group: root
     - mode: 600

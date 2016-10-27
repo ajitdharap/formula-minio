@@ -1,0 +1,16 @@
+{% load_yaml as minio_versions %}
+
+
+server:
+  base_url: 'https://dl.minio.io/server/minio/release/linux-amd64/'
+  versions:
+    'RELEASE.2016-10-24T21-23-47Z': 49fd5f7a46c46d11bff64ad87d328d47
+
+
+client:
+  base_url: 'https://dl.minio.io/client/mc/release/linux-amd64/'
+  versions:
+    'RELEASE.2016-10-07T01-56-22Z': 6f7ecc23dba7f99703316a5afd3ff9d5
+
+
+{% endload %}

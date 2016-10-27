@@ -1,6 +1,14 @@
 {
         "version": "8",
         "hosts": {
+{%- for cred in additional_credentials %}
+                "{{ cred['name'] }}": {
+                        "url": "{{ cred['url'] }}",
+                        "accessKey": "{{ cred['access_key'] }}",
+                        "secretKey": "{{ cred['secret_key'] }}",
+                        "api": "{{ cred['api'] | default('S3v4') }}"
+                }
+{%- endfor %}
 {%- for server in servers %}
                 "{{ server['name'] }}": {
                         "url": "{{ server['url'] }}",
