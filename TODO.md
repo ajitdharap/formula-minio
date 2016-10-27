@@ -1,3 +1,4 @@
-- fuse minifs: https://github.com/minio/minfs
-- Add nifty readme
+- test in vagrant with ubuntu and debian and fresh machines
 - add states: running, dead, absent
+- Add nifty readme
+- fuse minifs: https://github.com/minio/minfs
