@@ -1,4 +1,5 @@
 {% set minio = salt['pillar.get']('minio') %}
+{% from 'minio/versions.yaml' import minio_versions %}
 
 
 ## User and group
@@ -32,11 +33,16 @@ minio_server_directory_{{ minio_server_dir }}:
 
 ## Minio server binary
 
+# Take care of installing the version specified in the pillar files
+{% set server_base_url = minio_versions['server']['base_url'] %}
+{% set server_version = minio['config']['server_version'] %}
+{% set server_binary_md5 = minio_versions['server']['versions'][server_version] %}
+
 minio_server_binary:
   file.managed:
     - name: /usr/share/minio/bin/minio
-    - source: 'https://dl.minio.io/server/minio/release/linux-amd64/minio'
-    - source_hash: 'md5={{ minio['config']['minio_binary_md5'] }}'
+    - source: '{{ server_base_url }}{{ server_version }}'
+    - source_hash: 'md5={{ server_binary_md5 }}'
     - user: root
     - group: minio
     - mode: 750
@@ -50,8 +56,8 @@ minio_server_binary:
 
     ## Configuration directories and files
 
-    {% for volume in server['volumes'] %}
-        {% if ':' not in volume %}
+    # We dont want to create directories if the volumes specified are not filesystem but HTTP
+    {% for volume in server['volumes'] if not 'http://' in volume and not 'https://' in volume %}
 minio_server_{{ server_name }}_volume-directory_{{ volume }}:
   file.directory:
     - name: {{ volume }}
@@ -59,7 +65,6 @@ minio_server_{{ server_name }}_volume-directory_{{ volume }}:
     - group: minio
     - mode: 770
     - makedirs: True
-        {% endif %}
     {% endfor %}
 
 minio_server_{{ server_name }}_directory_/etc/minio/{{ server_name }}:
