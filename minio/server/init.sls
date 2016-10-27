@@ -1,22 +1,8 @@
+include:
+  - minio.user
+
 {% set minio = salt['pillar.get']('minio') %}
 {% from 'minio/versions.yaml' import minio_versions %}
-
-
-## User and group
-
-minio_server_group:
-  group.present:
-    - name: minio
-    - system: True
-
-minio_server_user:
-  user.present:
-    - name: minio
-    - system: True
-    - home: /usr/share/minio/
-    - createhome: True
-    - groups:
-      - minio
 
 
 ## General directories
