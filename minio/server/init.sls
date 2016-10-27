@@ -1,5 +1,5 @@
 {% set minio = salt['pillar.get']('minio') %}
-{% from 'minio/versions.yaml' import versions %}
+{% from 'minio/versions.yaml' import minio_versions %}
 
 
 ## User and group
@@ -34,14 +34,14 @@ minio_server_directory_{{ minio_server_dir }}:
 ## Minio server binary
 
 # Take care of installing the version specified in the pillar files
-{% set server_base_url = versions['server']['base_url'] %}
+{% set server_base_url = minio_versions['server']['base_url'] %}
 {% set server_version = minio['config']['server_version'] %}
-{% set server_binary_md5 = versions['server'][server_version] %}
+{% set server_binary_md5 = minio_versions['server']['versions'][server_version] %}
 
 minio_server_binary:
   file.managed:
     - name: /usr/share/minio/bin/minio
-    - source: '{{ server_base_url }}/{{ server_version }}'
+    - source: '{{ server_base_url }}{{ server_version }}'
     - source_hash: 'md5={{ server_binary_md5 }}'
     - user: root
     - group: minio

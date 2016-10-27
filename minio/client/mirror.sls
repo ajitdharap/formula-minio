@@ -31,10 +31,10 @@ include:
 # Start / Restart the service
 'minio_client_mirror_service_minio-mirror-{{ mirror['name'] }}':
   service.running:
-    - name: minio-{{ mirror['name'] }}
+    - name: minio-mirror-{{ mirror['name'] }}
     - enable: True
     - watch:
       - file: 'minio_client_mirror_config_systemd_minio-mirror-{{ mirror['name'] }}'
 
 
-{% endif %}
+{% endfor %}

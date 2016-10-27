@@ -1,6 +1,8 @@
+# Minio saltstack pillar file
 minio:
 
 
+  # General formula configuration
   config:
     # Pin the installations to specific versions of packages
     # You can just specify the version here. md5 hashes for the files (saltstacks file.managed needs that)
@@ -9,8 +11,9 @@ minio:
     # Note that you can state "latest", but you will have to update the hash all the time. We think pinning versions
     # here is better, as we can keep the formula updated with versions that were working in our vagrant dev setups
     # and that passed our saltstack test environments.
+    # Please omit the minio. and mc. at the beginning of the versions
     server_version: 'RELEASE.2016-10-24T21-23-47Z'
-    mc_version: 'RELEASE.2016-10-07T01-56-22Z'
+    mc_version:  'RELEASE.2016-10-07T01-56-22Z'
 
 
   # Using this, multiple systemd daemonized `minio-mc mirror -w` will be setup on the targeted machine. Using this,
@@ -20,19 +23,19 @@ minio:
         # The name has to be filename suitable and the service will be called like: systemctl start minio-mirror-{ name }.service
         # NOTE: If you specify local directories, this formula DOES NOT create them! Create them and make them writable to the minio user
       - name: 'play-to-s3'
-        from: play/bucket
-        to: s3/mybucket
+        source: 'play/test1'
+        target: 'play/test2'
 
     # If you want to replicate to / from an AWS S3 bucket, specify additional credentials here, they will be put in /root/.mc/config.json
     additional_credentials:
-      - url: foo
-        secret_key: bar
-        access_key: foobar
-        api: 123
-          
-          
+      play:
+        url: 'https://play.minio.io:9000'
+        secret_key: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG'
+        access_key: 'Q3AM3UQ867SPQQA43P2F'
+        api: 'S3v4'
 
 
+  # Minio server configuration
   servers:
 
     # Define multiple servers
